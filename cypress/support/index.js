@@ -18,26 +18,3 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-describe('Quiz Test', () => {
-  beforeEach(() => {
-    cy.window().then((win) => {
-      win.sessionStorage.clear()
-      win.localStorage.clear()
-    })
-  })
-
-  it('should persist data', () => {
-    cy.visit(baseUrl + "/main.html");
-
-    //... your test code
-
-    cy.window().then((win) => {
-      win.sessionStorage.setItem('progress', JSON.stringify(choiList))
-      win.localStorage.setItem('score', currentScore)
-    })
-
-    cy.reload()
-
-    //... rest of your test code
-  })
-})
