@@ -33,6 +33,25 @@ const questions = [
 // Display the quiz questions and choices
 
 const questionsElement = document.getElementById("questions");
+const submit = document.getElementById("submit");
+const score = document.getElementById("score");
+
+function pageLoad() {
+  let preScore = localStorage.getItem("score");
+  let preChoices = JSON.parse(sessionStorage.getItem("progress"));
+  // console.log(preScore, preChoices);
+  if (preScore) score.innerText = "Your score is " + preScore + " out of 5.";
+  // if (preChoices) {
+  //   preChoices.forEach((k, i) => {
+  //     let name = "question-" + i;
+  //     let choices = document.getElementsByName(name);
+  //     for (cho of choices) {
+  //       if (cho.value == k) cho.setAttribute("checked", true);
+  //     }
+  //   });
+  // }
+  return preChoices;
+}
 
 function renderQuestions() {
   for (let i = 0; i < questions.length; i++) {
@@ -46,9 +65,12 @@ function renderQuestions() {
       choiceElement.setAttribute("type", "radio");
       choiceElement.setAttribute("name", `question-${i}`);
       choiceElement.setAttribute("value", choice);
-      // if (userAnswers[i] === choice) {
-      //   choiceElement.setAttribute("checked", true);
-      // }
+      /////////////////
+      let userAnswers = pageLoad();
+      if (userAnswers && userAnswers[i] === choice) {
+        choiceElement.setAttribute("checked", true);
+      }
+      ////////////////////
       const choiceText = document.createTextNode(choice);
       questionElement.appendChild(choiceElement);
       questionElement.appendChild(choiceText);
@@ -57,9 +79,6 @@ function renderQuestions() {
   }
 }
 renderQuestions();
-
-const submit = document.getElementById("submit");
-const score = document.getElementById("score");
 
 submit.addEventListener("click", (e) => {
   e.preventDefault();
@@ -80,23 +99,3 @@ submit.addEventListener("click", (e) => {
   localStorage.setItem("score", currentScore);
   score.innerText = "Your score is " + currentScore + " out of 5.";
 });
-
-async function pageLoad() {
-  let preScore = await localStorage.getItem("score");
-  let preChoices =await  JSON.parse(sessionStorage.getItem("progress"));
-  // console.log(preScore, preChoices);
-  if (preScore) score.innerText = "Your score is " + preScore + " out of 5.";
-  if (preChoices) {
-    preChoices.forEach((k, i) => {
-      let name = "question-" + i;
-      let choices = document.getElementsByName(name);
-      for (cho of choices) {
-        if (cho.value == k) {
-			cho.checked= true;
-			cho.setAttribute("checked",true);
-		}
-      }
-    });
-  }
-}
-pageLoad();
