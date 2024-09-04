@@ -69,6 +69,7 @@ function renderQuestions() {
       let userAnswers = pageLoad();
       if (userAnswers && userAnswers[i] === choice) {
         choiceElement.setAttribute("checked", true);
+		  choiceElement.checked=true;
       }
       ////////////////////
       const choiceText = document.createTextNode(choice);
