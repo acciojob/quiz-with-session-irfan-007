@@ -91,8 +91,8 @@ function pageLoad() {
       let name = "question-" + i;
       let choices = document.getElementsByName(name);
       for (cho of choices) {
-        if (cho.value == k) cho.checked = true;
-      }  
+        if (cho.value == k) cho.setAttribute("checked", true);
+      }
     });
   }
 }
