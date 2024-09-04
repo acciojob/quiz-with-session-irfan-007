@@ -92,7 +92,7 @@ function pageLoad() {
       let choices = document.getElementsByName(name);
       for (cho of choices) {
         if (cho.value == k) cho.checked = true;
-      }
+      }  
     });
   }
 }
