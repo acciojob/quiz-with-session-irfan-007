@@ -31,6 +31,9 @@ const questions = [
 ];
 
 // Display the quiz questions and choices
+
+const questionsElement = document.getElementById("questions");
+
 function renderQuestions() {
   for (let i = 0; i < questions.length; i++) {
     const question = questions[i];
@@ -43,9 +46,9 @@ function renderQuestions() {
       choiceElement.setAttribute("type", "radio");
       choiceElement.setAttribute("name", `question-${i}`);
       choiceElement.setAttribute("value", choice);
-      if (userAnswers[i] === choice) {
-        choiceElement.setAttribute("checked", true);
-      }
+      // if (userAnswers[i] === choice) {
+      //   choiceElement.setAttribute("checked", true);
+      // }
       const choiceText = document.createTextNode(choice);
       questionElement.appendChild(choiceElement);
       questionElement.appendChild(choiceText);
@@ -54,3 +57,43 @@ function renderQuestions() {
   }
 }
 renderQuestions();
+
+const submit = document.getElementById("submit");
+const score = document.getElementById("score");
+
+submit.addEventListener("click", (e) => {
+  e.preventDefault();
+  let currentScore = 0;
+  let choiList = [];
+  for (let i = 0; i < questions.length; i++) {
+    let name = "question-" + i;
+    let choices = document.getElementsByName(name);
+    let ans = "";
+    choices.forEach((k) => {
+      if (k.checked) ans = k;
+    });
+    if (ans.value == questions[i].answer) currentScore++;
+    choiList.push(ans.value);
+  }
+  // console.log(choiList, currentScore);
+  sessionStorage.setItem("progress", JSON.stringify(choiList));
+  localStorage.setItem("score", currentScore);
+  score.innerText = currentScore;
+});
+
+function pageLoad() {
+  let preScore = localStorage.getItem("score");
+  let preChoices = JSON.parse(sessionStorage.getItem("progress"));
+  console.log(preScore, preChoices);
+  if (preScore) score.innerText = preScore;
+  if (preChoices) {
+    preChoices.forEach((k, i) => {
+      let name = "question-" + i;
+      let choices = document.getElementsByName(name);
+      for (cho of choices) {
+        if (cho.value == k) cho.checked = true;
+      }
+    });
+  }
+}
+pageLoad();
