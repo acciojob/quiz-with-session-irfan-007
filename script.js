@@ -2,7 +2,25 @@
 
 // Do not change code below this line
 // This code will just display the questions to the screen
-const questions = [
+beforeEach(() => {
+  cy.window().then((win) => {
+    win.sessionStorage.clear()
+    win.localStorage.clear()
+  })
+})
+
+it('should persist data', () => {
+  //... your test code
+
+  cy.window().then((win) => {
+    win.sessionStorage.setItem('progress', JSON.stringify(choiList))
+    win.localStorage.setItem('score', currentScore)
+  })
+
+  cy.reload()
+
+  //... rest of your test code
+	const questions = [
   {
     question: "What is the capital of France?",
     choices: ["Paris", "London", "Berlin", "Madrid"],
@@ -100,3 +118,5 @@ submit.addEventListener("click", (e) => {
   localStorage.setItem("score", currentScore);
   score.innerText = "Your score is " + currentScore + " out of 5.";
 });
+
+})
