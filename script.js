@@ -78,14 +78,14 @@ submit.addEventListener("click", (e) => {
   // console.log(choiList, currentScore);
   sessionStorage.setItem("progress", JSON.stringify(choiList));
   localStorage.setItem("score", currentScore);
-  score.innerText = currentScore;
+  score.innerText = "Your score is " + currentScore + " out of 5.";
 });
 
 function pageLoad() {
   let preScore = localStorage.getItem("score");
   let preChoices = JSON.parse(sessionStorage.getItem("progress"));
   console.log(preScore, preChoices);
-  if (preScore) score.innerText = preScore;
+  if (preScore) score.innerText = "Your score is " + preScore + " out of 5.";
   if (preChoices) {
     preChoices.forEach((k, i) => {
       let name = "question-" + i;
