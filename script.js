@@ -81,17 +81,20 @@ submit.addEventListener("click", (e) => {
   score.innerText = "Your score is " + currentScore + " out of 5.";
 });
 
-function pageLoad() {
-  let preScore = localStorage.getItem("score");
-  let preChoices = JSON.parse(sessionStorage.getItem("progress"));
-  console.log(preScore, preChoices);
+async function pageLoad() {
+  let preScore = await localStorage.getItem("score");
+  let preChoices =await  JSON.parse(sessionStorage.getItem("progress"));
+  // console.log(preScore, preChoices);
   if (preScore) score.innerText = "Your score is " + preScore + " out of 5.";
   if (preChoices) {
     preChoices.forEach((k, i) => {
       let name = "question-" + i;
       let choices = document.getElementsByName(name);
       for (cho of choices) {
-        if (cho.value == k) cho.checked= true;
+        if (cho.value == k) {
+			cho.checked= true;
+			cho.setAttribute("checked",true);
+		}
       }
     });
   }
